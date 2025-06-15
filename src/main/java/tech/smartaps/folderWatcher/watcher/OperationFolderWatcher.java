@@ -42,20 +42,25 @@ public class OperationFolderWatcher extends FolderWatcher {
     // treatment
     public void treatment(String baseFolderPath) throws Exception {
         for(String filename : getAllTextFiles()) {
-            // get operation
-            String operation = WatcherHelper.readLines(filename);
-            OperationFolder of = (OperationFolder) this.getFolder();
+            // checking if file has not already been checked and computed
+            if(!this.getCheckedFiled().contains(filename)) {
+                // get operation
+                String operation = WatcherHelper.readLines(filename);
+                OperationFolder of = (OperationFolder) this.getFolder();
 
-            // if operation pattern == folder pattern, compute operation
-            if(evaluateOperation(of.getPattern(), operation)) {
-                String result = getResult(operation, of.getClassName());
-                appendResultInFile(filename, result);
-            }
-            // else move to base folder
-            else {
-                String source = of.getPath() + "/" + filename;
-                String destination = this.getBaseFolderPath() + "/" + filename;
-                move(source, destination);
+                // if operation pattern == folder pattern, compute operation
+                if(evaluateOperation(of.getPattern(), operation)) {
+                    String result = getResult(operation, of.getClassName());
+                    appendResultInFile(filename, result);
+                    // added filename into checked files
+                    this.getCheckedFiled().add(filename);
+                }
+                // else move to base folder
+                else {
+                    String source = of.getPath() + "/" + filename;
+                    String destination = this.getBaseFolderPath() + "/" + filename;
+                    move(source, destination);
+                }
             }
         }
     }
