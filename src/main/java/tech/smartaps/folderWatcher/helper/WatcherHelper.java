@@ -6,6 +6,8 @@ import tech.smartaps.folderWatcher.configuration.ConfigurationModel;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WatcherHelper {
 
@@ -36,5 +38,11 @@ public class WatcherHelper {
 
         // return
         return lines.toString();
+    }
+
+    // get pattern matcher
+    public static Matcher getMatcher(String regex, String text) {
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(text);
     }
 }
