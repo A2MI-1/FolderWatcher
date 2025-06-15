@@ -26,25 +26,18 @@ public class BaseFolderWatcher extends FolderWatcher {
 
     // base treatment
     public void treatment(List<OperationFolder> operationFolders) throws Exception {
-        // go through all files in base folder
-        File file = new File(this.getFolder().getPath());
 
-        if(file.list() == null) throw new Exception( "This folder is empty.");
-        else for(String filename : file.list()) {
-            // filter by extension .txt
-            if(filename.endsWith(".txt")) {
-
-                // get operation
-                String operation = WatcherHelper.readLines(filename);
-                for(OperationFolder of : this.getOperationFolders()) {
-                    // if operation pattern without whitespaces == folder pattern, move to folder
-                    if(evaluateOperation(of.getPattern(), operation.replaceAll(" ", "").trim())) {
-                        String source = this.getFolder().getPath() + "/" + filename;
-                        String destination = of.getPath() + "/" + filename;
-                        move(source, destination);
-                        // get out of loop
-                        break;
-                    }
+        for(String filename : getAllTextFiles()) {
+            // get operation
+            String operation = WatcherHelper.readLines(filename);
+            for(OperationFolder of : this.getOperationFolders()) {
+                // if operation pattern without whitespaces == folder pattern, move to folder
+                if(evaluateOperation(of.getPattern(), operation.replaceAll(" ", "").trim())) {
+                    String source = this.getFolder().getPath() + "/" + filename;
+                    String destination = of.getPath() + "/" + filename;
+                    move(source, destination);
+                    // get out of loop
+                    break;
                 }
             }
         }
