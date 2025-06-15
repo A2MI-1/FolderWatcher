@@ -65,7 +65,7 @@ public abstract class FolderWatcher implements Runnable {
         }
 
         // check if empty
-        if(textFiles.isEmpty()) throw new Exception("No text files in this folder.");
+        // if(textFiles.isEmpty()) throw new Exception("No text files in this folder.");
         return textFiles;
     }
 }
