@@ -9,11 +9,8 @@ import java.io.IOException;
 
 public class WatcherHelper {
 
-    // Gson
-    Gson gson = new Gson();
-
     // parse configuration file
-    public ConfigurationModel parseConfigurationModel(String filename) {
+    public static ConfigurationModel parseConfigurationModel(Gson gson, String filename) {
         // read configuration.json file
         String configurationFileAsString = readLines(filename);
 
@@ -22,7 +19,7 @@ public class WatcherHelper {
     }
 
     // read all lines in a file
-    public String readLines(String filename) {
+    public static String readLines(String filename) {
         StringBuilder lines = new StringBuilder();
         try {
             // read filename
