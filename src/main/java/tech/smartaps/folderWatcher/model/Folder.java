@@ -2,7 +2,7 @@ package tech.smartaps.folderWatcher.model;
 
 public class Folder {
 
-    protected String path, className;
+    protected String path;
 
     public String getPath() {
         return path;
@@ -10,13 +10,5 @@ public class Folder {
 
     public void setPath(String path) {
         this.path = path;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 }

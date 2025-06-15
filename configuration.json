@@ -1,28 +1,32 @@
 {
   "baseFolder": {
-    "path": "",
-    "className": ""
+    "path": "/home/a2mi/Documents/Practice/TestSmartAPS"
   },
   "operationFolders": [
     {
-      "path": "",
-      "className": "",
-      "pattern": ""
+      "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Addition",
+      "className": "tech.smartaps.folderWatcher.operationClass.Add",
+      "pattern": "(-?\\d+(?:\\.\\d+)?)+(-?\\d+(?:\\.\\d+)?)"
     },
     {
-      "path": "",
-      "className": "",
-      "pattern": ""
+      "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Division",
+      "className": "tech.smartaps.folderWatcher.operationClass.Divide",
+      "pattern": "(-?\\d+(?:\\.\\d+)?)/(-?\\d+(?:\\.\\d+)?)"
     },
     {
-      "path": "",
-      "className": "",
-      "pattern": ""
+      "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Multiplication",
+      "className": "tech.smartaps.folderWatcher.operationClass.Multiply",
+      "pattern": "(-?\\d+(?:\\.\\d+)?)*(-?\\d+(?:\\.\\d+)?)"
     },
     {
-      "path": "",
-      "className": "",
-      "pattern": ""
+      "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Soustraction",
+      "className": "tech.smartaps.folderWatcher.operationClass.Subtract",
+      "pattern": "(-?\\d+(?:\\.\\d+)?)-(-?\\d+(?:\\.\\d+)?)"
+    },
+    {
+      "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Fibonacci",
+      "className": "tech.smartaps.folderWatcher.operationClass",
+      "pattern": "fibonacci(\\d+)"
     }
   ]
 }
