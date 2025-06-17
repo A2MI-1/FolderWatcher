@@ -5,6 +5,7 @@ import tech.smartaps.folderWatcher.helper.WatcherHelper;
 import tech.smartaps.folderWatcher.model.OperationFolder;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class OperationFolderWatcher extends FolderWatcher {
     // treatment
     public void treatment(String baseFolderPath) throws Exception {
         for(String s : getAllTextFiles()) {
-            String filename = this.getFolder().getPath() + "/" + s;
+            String filename = this.getFolder().getPath() + File.separator + s;
             // checking if file has not already been checked and computed
             if(!this.getCheckedFiled().contains(filename)) {
                 // get operation

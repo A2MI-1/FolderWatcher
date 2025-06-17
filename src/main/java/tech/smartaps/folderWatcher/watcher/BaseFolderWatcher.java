@@ -28,7 +28,7 @@ public class BaseFolderWatcher extends FolderWatcher {
     public void treatment(List<OperationFolder> operationFolders) throws Exception {
 
         for(String s : getAllTextFiles()) {
-            String filename = this.getFolder().getPath() + "/" + s;
+            String filename = this.getFolder().getPath() + File.separator + s;
             // get operation
             String operation = WatcherHelper.readLines(filename);
             for(OperationFolder of : this.getOperationFolders()) {
