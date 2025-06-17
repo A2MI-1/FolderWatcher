@@ -8,9 +8,9 @@ public class Add implements ICalculator {
 
     @Override
     public Double compute(List<Double> operationParameters) {
-        Double result = 0.0;
-        for(Double d : operationParameters) {
-            result += d;
+        Double result = operationParameters.get(0);
+        for(int i = 1; i < operationParameters.size(); i++) {
+            result += operationParameters.get(i);
         }
         return result;
     }
