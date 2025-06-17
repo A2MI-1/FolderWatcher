@@ -21,7 +21,7 @@
     {
       "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Subtraction",
       "className": "tech.smartaps.folderWatcher.operationClass.Subtract",
-      "pattern": "(-?\\d+(?:\\.\\d+)?)[-](-?\\d+(?:\\.\\d+)?)"
+      "pattern": "\\((-?\\d+(?:\\.\\d+)?)\\)[-]\\((-?\\d+(?:\\.\\d+)?)\\)"
     },
     {
       "path": "/home/a2mi/Documents/Practice/TestSmartAPS/Fibonacci",

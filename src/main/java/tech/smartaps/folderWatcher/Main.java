@@ -29,8 +29,8 @@ public class Main {
         threads.add(new Thread(new BaseFolderWatcher(configurationModel.getBaseFolder(), configurationModel.getOperationFolders())));
 
         // start all threads
+        System.out.println("Starting watchers...");
         for(Thread t : threads) {
-            System.out.println("Starting watchers...");
             t.start();
         }
     }
