@@ -115,6 +115,7 @@ public class OperationFolderWatcher extends FolderWatcher {
             try {
                 // execute treatment
                 treatment(this.getBaseFolderPath());
+                Thread.sleep(1000);
             } catch (Exception exception) {
                 exception.printStackTrace(System.out);
             }

@@ -50,6 +50,7 @@ public class BaseFolderWatcher extends FolderWatcher {
             try {
                 // execute treatment
                 treatment(operationFolders);
+                Thread.sleep(1000);
             } catch (Exception exception) {
                 exception.printStackTrace(System.out);
             }
