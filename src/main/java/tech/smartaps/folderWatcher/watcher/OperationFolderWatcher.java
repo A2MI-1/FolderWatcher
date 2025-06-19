@@ -22,6 +22,7 @@ public class OperationFolderWatcher extends FolderWatcher {
     public OperationFolderWatcher(Folder baseFolder, OperationFolder folder) {
         super(baseFolder);
         this.setFolder(folder);
+        this.checkedFiles = new ArrayList<>();
     }
 
     public OperationFolder getFolder() {

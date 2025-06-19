@@ -35,7 +35,7 @@ public class BaseFolderWatcher extends FolderWatcher{
             for(OperationFolder of : this.getOperationFolders()) {
                 // if operation pattern without whitespaces == folder pattern, move to folder
                 if(of.isLikePattern(operation.replaceAll(" ","").trim())) {
-                    this.getBaseFolder().move(s, of.getPath() + File.separator + s);
+                    this.getBaseFolder().move(filename, of.getPath() + File.separator + s);
                     // get out of loop
                     break;
                 }
