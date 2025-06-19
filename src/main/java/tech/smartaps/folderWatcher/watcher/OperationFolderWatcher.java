@@ -59,8 +59,8 @@ public class OperationFolderWatcher extends FolderWatcher {
                 }
                 // else move to base folder
                 else {
-                    String source = of.getPath() + "/" + s;
-                    String destination = this.getBaseFolderPath() + "/" + s;
+                    String source = of.getPath() + File.separator + s;
+                    String destination = this.getBaseFolderPath() + File.separator + s;
                     move(source, destination);
                 }
             }
