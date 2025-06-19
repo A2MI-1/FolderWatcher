@@ -1,8 +1,9 @@
 package tech.smartaps.folderWatcher.watcher;
 
 import tech.smartaps.folderWatcher.ICalculator;
+import tech.smartaps.folderWatcher.folder.Folder;
+import tech.smartaps.folderWatcher.folder.OperationFolder;
 import tech.smartaps.folderWatcher.helper.WatcherHelper;
-import tech.smartaps.folderWatcher.model.OperationFolder;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,54 +15,50 @@ import java.util.regex.Matcher;
 
 public class OperationFolderWatcher extends FolderWatcher {
 
-    private List<String> checkedFiled;
+    private OperationFolder folder;
 
-    private String baseFolderPath;
+    private List<String> checkedFiles;
 
-    public OperationFolderWatcher(OperationFolder operationFolder, String baseFolderPath) {
-        super(operationFolder);
-        this.setBaseFolderPath(baseFolderPath);
-        this.setCheckedFiled(new ArrayList<>());
+    public OperationFolderWatcher(Folder baseFolder, OperationFolder folder) {
+        super(baseFolder);
+        this.setFolder(folder);
     }
 
-    public String getBaseFolderPath() {
-        return baseFolderPath;
+    public OperationFolder getFolder() {
+        return folder;
     }
 
-    public void setBaseFolderPath(String baseFolderPath) {
-        this.baseFolderPath = baseFolderPath;
+    public void setFolder(OperationFolder folder) {
+        this.folder = folder;
     }
 
-    public List<String> getCheckedFiled() {
-        return checkedFiled;
+    public List<String> getCheckedFiles() {
+        return checkedFiles;
     }
 
-    public void setCheckedFiled(List<String> checkedFiled) {
-        this.checkedFiled = checkedFiled;
-    }
+    @Override
+    public void treatment() throws Exception {
 
-    // treatment
-    public void treatment(String baseFolderPath) throws Exception {
-        for(String s : getAllTextFiles()) {
+        for(String s : this.getFolder().getAllTextFiles()) {
+
             String filename = this.getFolder().getPath() + File.separator + s;
+
             // checking if file has not already been checked and computed
-            if(!this.getCheckedFiled().contains(filename)) {
+            if(!this.getCheckedFiles().contains(filename)) {
                 // get operation
                 String operation = WatcherHelper.readLines(filename);
-                OperationFolder of = (OperationFolder) this.getFolder();
 
                 // if operation pattern == folder pattern, compute operation
-                if(evaluateOperation(of.getPattern(), operation.replaceAll(" ", "").trim())) {
-                    String result = getResult(operation, of.getClassName());
+                if(this.getFolder().isLikePattern(operation.replaceAll(" ", "").trim())) {
+                    String result = getResult(operation, this.getFolder().getClassName());
                     appendResultInFile(filename, result);
                     // added filename into checked files
-                    this.getCheckedFiled().add(filename);
+                    this.getCheckedFiles().add(filename);
                 }
                 // else move to base folder
                 else {
-                    String source = of.getPath() + "/" + s;
-                    String destination = this.getBaseFolderPath() + "/" + s;
-                    move(source, destination);
+                    String destination = this.getBaseFolder().getPath() + "/" + s;
+                    this.getFolder().move(filename, destination);
                 }
             }
         }
@@ -96,6 +93,7 @@ public class OperationFolderWatcher extends FolderWatcher {
         }
     }
 
+    // append result
     public void appendResultInFile(String filename, String result) {
         try {
             // open a writer on a file
@@ -109,16 +107,4 @@ public class OperationFolderWatcher extends FolderWatcher {
         }
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                // execute treatment
-                treatment(this.getBaseFolderPath());
-                Thread.sleep(1000);
-            } catch (Exception exception) {
-                exception.printStackTrace(System.out);
-            }
-        }
-    }
 }

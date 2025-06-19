@@ -1,17 +1,17 @@
 package tech.smartaps.folderWatcher.watcher;
 
+import tech.smartaps.folderWatcher.folder.Folder;
+import tech.smartaps.folderWatcher.folder.OperationFolder;
 import tech.smartaps.folderWatcher.helper.WatcherHelper;
-import tech.smartaps.folderWatcher.model.BaseFolder;
-import tech.smartaps.folderWatcher.model.OperationFolder;
 
 import java.io.File;
 import java.util.List;
 
-public class BaseFolderWatcher extends FolderWatcher {
+public class BaseFolderWatcher extends FolderWatcher{
 
     private List<OperationFolder> operationFolders;
 
-    public BaseFolderWatcher(BaseFolder baseFolder, List<OperationFolder> operationFolders) {
+    public BaseFolderWatcher(Folder baseFolder, List<OperationFolder> operationFolders) {
         super(baseFolder);
         this.setOperationFolders(operationFolders);
     }
@@ -25,34 +25,20 @@ public class BaseFolderWatcher extends FolderWatcher {
     }
 
     // base treatment
-    public void treatment(List<OperationFolder> operationFolders) throws Exception {
-
-        for(String s : getAllTextFiles()) {
-            String filename = this.getFolder().getPath() + File.separator + s;
+    @Override
+    public void treatment() throws Exception {
+        // get base folder
+        for(String s : this.getBaseFolder().getAllTextFiles()) {
+            String filename = this.getBaseFolder().getPath() + File.separator + s;
             // get operation
             String operation = WatcherHelper.readLines(filename);
             for(OperationFolder of : this.getOperationFolders()) {
                 // if operation pattern without whitespaces == folder pattern, move to folder
-                if(evaluateOperation(of.getPattern(), operation.replaceAll(" ","").trim())) {
-                    String source = this.getFolder().getPath() + "/" + s;
-                    String destination = of.getPath() + "/" + s;
-                    move(source, destination);
+                if(of.isLikePattern(operation.replaceAll(" ","").trim())) {
+                    this.getBaseFolder().move(s, of.getPath() + File.separator + s);
                     // get out of loop
                     break;
                 }
-            }
-        }
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                // execute treatment
-                treatment(operationFolders);
-                Thread.sleep(1000);
-            } catch (Exception exception) {
-                exception.printStackTrace(System.out);
             }
         }
     }
